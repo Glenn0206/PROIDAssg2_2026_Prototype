@@ -75,6 +75,14 @@ video.fade-out{
   pointer-events: all;
 }
 
+/* Reflection overlay - make it break out and appear centered */
+#reflectionOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 9999;
+}
+
 /* Choice buttons */
 .choices{
   display: flex;
@@ -170,7 +178,8 @@ video.fade-out{
   width: min(650px, 90%);
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  margin: 20px;
 }
 
 .reflection-form-container h2 {

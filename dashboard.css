@@ -1,16 +1,18 @@
 /* Dashboard specific styles */
 .dashboard-body {
   background: #f9fafb;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 0;
-  height: auto;
   min-height: 100vh;
 }
 
 .dashboard-container {
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 60px 24px;
 }
 
 /* Header */
