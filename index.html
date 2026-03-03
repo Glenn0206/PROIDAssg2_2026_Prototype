@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Story</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="video-container">
+    <video id="mainVideo" autoplay muted playsinline>
+      <source src="Videos/vid1.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Choice overlay -->
+    <div class="overlay" id="choiceOverlay">
+      <div class="choices">
+        <button class="btn" data-video="Videos/vid2.mp4">Option A</button>
+        <button class="btn" data-video="Videos/vid3.mp4">Option B</button>
+      </div>
+    </div>
+
+    <!-- End screen overlay -->
+    <div class="overlay" id="endOverlay">
+      <div class="end-card" id="endCard"></div>
+
+      <!-- Review modal -->
+      <div class="modal" id="reviewModal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true">
+          <h4>Review</h4>
+          <p id="reviewText"></p>
+          <div class="modal-actions">
+            <button class="btn-close" id="closeReviewBtn">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
