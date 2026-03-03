@@ -23,22 +23,12 @@ function renderEndScreen() {
   endCard.innerHTML = `
     <h2>THE END</h2>
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-      <button id="showReviewBtn" class="btn">Show Review</button>
       <button id="showReflectionBtn" class="btn btn-reflection">Share Your Reflection</button>
       <a href="dashboard.html" class="btn btn-dashboard">View Dashboard</a>
     </div>
   `;
 
-  document.getElementById("showReviewBtn").addEventListener("click", openReview);
   document.getElementById("showReflectionBtn").addEventListener("click", openReflection);
-}
-
-function openReview() {
-  reviewText.textContent =
-    "Students complete pre, mid, and post program mini surveys to track changes in body confidence and self-esteem";
-
-  reviewModal.classList.add("show");
-  reviewModal.setAttribute("aria-hidden", "false");
 }
 
 function closeReview() {
@@ -109,6 +99,7 @@ reflectionOverlay.addEventListener("click", (e) => {
 
 video.addEventListener("ended", () => {
   if (currentSrc === INTRO) {
+    // Smoothly show the choice overlay
     choiceOverlay.classList.add("show");
   } else {
     choiceOverlay.classList.remove("show");
@@ -120,11 +111,7 @@ video.addEventListener("ended", () => {
       video.pause();
       video.currentTime = Math.max(0, video.duration - 0.05);
     } catch {}
-    
-    // Automatically show reflection form after 2 seconds
-    setTimeout(() => {
-      openReflection();
-    }, 2000);
+    // Reflection form no longer opens automatically
   }
 });
 
@@ -133,17 +120,25 @@ async function smoothSwitchTo(src) {
   endOverlay.classList.remove("show");
   closeReview();
 
+  // Fade out video
   video.classList.add("fade-out");
-  await new Promise((r) => setTimeout(r, 500));
+  await new Promise((r) => setTimeout(r, 400));
 
+  // Keep last frame visible by pausing before source change
+  video.pause();
+  // Change source
   currentSrc = src;
   video.src = src;
   video.load();
 
+  // Wait for new video to be ready
   await new Promise((r) => video.addEventListener("canplay", r, { once: true }));
 
+  // Fade in video
   video.classList.remove("fade-out");
+  video.classList.add("fade-in");
   video.play().catch(() => {});
+  setTimeout(() => video.classList.remove("fade-in"), 400);
 }
 
 document.querySelectorAll(".btn[data-video]").forEach((btn) => {

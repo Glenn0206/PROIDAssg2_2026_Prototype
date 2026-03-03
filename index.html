@@ -8,11 +8,20 @@
 </head>
 
 <body>
-  <a href="dashboard.html" class="dashboard-link" title="View Dashboard">📊 Dashboard</a>
-  
-  <div class="video-container">
+  <!-- <a href="dashboard.html" class="dashboard-link" title="View Dashboard">📊 Dashboard</a> -->
+
+  <div class="main-wrapper">
+    <h1 class="main-title">Module 1</h1>
+    <div class="video-container">
     <video id="mainVideo" autoplay muted playsinline>
       <source src="Videos/vid1.mp4" type="video/mp4">
+      <!-- Poster image to prevent black screen -->
+    </video>
+    <style>
+      #mainVideo {
+        background: #222;
+      }
+    </style>
       Your browser does not support the video tag.
     </video>
 
@@ -97,5 +106,7 @@
   </div>
 
   <script src="script.js"></script>
+    </div>
+  </div>
 </body>
 </html>
