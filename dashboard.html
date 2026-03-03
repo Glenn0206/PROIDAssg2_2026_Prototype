@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reflection Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body class="dashboard-body">
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <div class="header-content">
+        <h1>Reflection Dashboard</h1>
+        <p class="header-subtitle">View and manage student reflections</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-export" id="exportBtn">Export Data</button>
+        <a href="index.html" class="btn btn-back">Back to Story</a>
+      </div>
+    </header>
+
+    <div class="dashboard-stats">
+      <div class="stat-card">
+        <div class="stat-number" id="totalSubmissions">0</div>
+        <div class="stat-label">Total Reflections</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="avgConfidence">0</div>
+        <div class="stat-label">Avg Confidence</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="mostCommonEmotion">-</div>
+        <div class="stat-label">Most Common Emotion</div>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="content-header">
+        <h2>All Submissions</h2>
+        <div class="search-filter">
+          <input type="text" id="searchInput" placeholder="Search by name or content..." class="search-box">
+          <select id="emotionFilter" class="filter-select">
+            <option value="">All Emotions</option>
+            <option value="inspired">Inspired</option>
+            <option value="thoughtful">Thoughtful</option>
+            <option value="empowered">Empowered</option>
+            <option value="curious">Curious</option>
+            <option value="concerned">Concerned</option>
+            <option value="other">Other</option>
+          </select>
+          <button class="btn-clear" id="clearAllBtn">Clear All Data</button>
+        </div>
+      </div>
+
+      <div id="submissionsContainer" class="submissions-grid">
+        <!-- Submissions will be dynamically inserted here -->
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">📋</div>
+        <h3>No Reflections Yet</h3>
+        <p>Reflection submissions will appear here once students complete the form.</p>
+        <a href="index.html" class="btn">Go to Story</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
