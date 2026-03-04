@@ -19,6 +19,22 @@ function initModules() {
   // Update progress
   progressIndicator.textContent = `Completed ${completedModules.length}/6`;
   
+  // Update certificate button state
+  const certificateLink = document.getElementById('certificateLink');
+  const certTooltip = document.getElementById('certTooltip');
+  if (certificateLink) {
+    if (completedModules.length === 6) {
+      certificateLink.classList.remove('disabled');
+      certificateLink.title = 'Get Your Certificate';
+    } else {
+      certificateLink.classList.add('disabled');
+      certificateLink.title = '';
+      if (certTooltip) {
+        certTooltip.textContent = `Complete all 6 modules to unlock (${completedModules.length}/6)`;
+      }
+    }
+  }
+  
   moduleList.innerHTML = modules.map(module => {
     const isCompleted = completedModules.includes(module.id);
     const isActive = module.id === currentModule;
@@ -186,9 +202,30 @@ function switchToModule(moduleId) {
 const INTRO = "Videos/vid1.mp4";
 
 const video = document.getElementById("mainVideo");
+const playButton = document.getElementById("playButton");
 const choiceOverlay = document.getElementById("choiceOverlay");
 const endOverlay = document.getElementById("endOverlay");
 const endCard = document.getElementById("endCard");
+
+// Play button functionality
+if (playButton && video) {
+  playButton.addEventListener("click", () => {
+    video.play();
+    playButton.classList.add("hidden");
+  });
+  
+  // Show play button only when video is at the beginning and paused
+  video.addEventListener("pause", () => {
+    if (video.currentTime === 0) {
+      playButton.classList.remove("hidden");
+    }
+  });
+  
+  // Hide play button when video starts playing
+  video.addEventListener("play", () => {
+    playButton.classList.add("hidden");
+  });
+}
 
 const reviewModal = document.getElementById("reviewModal");
 const reviewText = document.getElementById("reviewText");
@@ -205,6 +242,7 @@ const confidenceValue = document.getElementById("confidenceValue");
 let currentSrc = INTRO;
 
 function renderEndScreen() {
+  if (!endCard) return;
   endCard.innerHTML = `
     <h2>THE END</h2>
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
@@ -213,23 +251,32 @@ function renderEndScreen() {
     </div>
   `;
 
-  document.getElementById("showReflectionBtn").addEventListener("click", openReflection);
+  const showReflectionBtn = document.getElementById("showReflectionBtn");
+  if (showReflectionBtn) {
+    showReflectionBtn.addEventListener("click", openReflection);
+  }
 }
 
 function closeReview() {
+  if (!reviewModal) return;
   reviewModal.classList.remove("show");
   reviewModal.setAttribute("aria-hidden", "true");
 }
 
-closeReviewBtn.addEventListener("click", closeReview);
+if (closeReviewBtn) {
+  closeReviewBtn.addEventListener("click", closeReview);
+}
 
 // click outside modal card to close
-reviewModal.addEventListener("click", (e) => {
-  if (e.target === reviewModal) closeReview();
-});
+if (reviewModal) {
+  reviewModal.addEventListener("click", (e) => {
+    if (e.target === reviewModal) closeReview();
+  });
+}
 
 // Reflection form functions
 function openReflection() {
+  if (!reflectionOverlay || !reflectionForm || !successMessage) return;
   reflectionOverlay.classList.add("show");
   reflectionForm.style.display = "block";
   successMessage.style.display = "none";
@@ -237,81 +284,100 @@ function openReflection() {
   // Update form title to show current module
   const formTitle = document.querySelector('.reflection-form-container h2');
   const module = modules.find(m => m.id === currentModule);
-  formTitle.textContent = `${module.name} Reflection`;
+  if (formTitle && module) {
+    formTitle.textContent = `${module.name} Reflection`;
+  }
 }
 
 function closeReflection() {
+  if (!reflectionOverlay || !reflectionForm || !confidenceValue) return;
   reflectionOverlay.classList.remove("show");
   reflectionForm.reset();
   confidenceValue.textContent = "5";
 }
 
 // Update confidence slider value display
-confidenceInput.addEventListener("input", (e) => {
-  confidenceValue.textContent = e.target.value;
-});
+if (confidenceInput && confidenceValue) {
+  confidenceInput.addEventListener("input", (e) => {
+    confidenceValue.textContent = e.target.value;
+  });
+}
 
 // Handle form submission
-reflectionForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  
-  // Collect form data
-  const formData = {
-    moduleId: currentModule,
-    moduleName: modules.find(m => m.id === currentModule).name,
-    studentName: document.getElementById("studentName").value,
-    mainTakeaway: document.getElementById("mainTakeaway").value,
-    emotionalResponse: document.getElementById("emotionalResponse").value,
-    confidence: document.getElementById("confidence").value,
-    additionalComments: document.getElementById("additionalComments").value,
-    timestamp: new Date().toISOString()
-  };
-  
-  // Save to localStorage
-  const existingData = localStorage.getItem('reflectionSubmissions');
-  const submissions = existingData ? JSON.parse(existingData) : [];
-  submissions.push(formData);
-  localStorage.setItem('reflectionSubmissions', JSON.stringify(submissions));
-  
-  console.log("Reflection submitted:", formData);
-  
-  // Mark current module as completed and unlock next module
-  completeModule(currentModule);
-  
-  // Show success message
-  reflectionForm.style.display = "none";
-  successMessage.style.display = "block";
-});
+if (reflectionForm) {
+  reflectionForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    // Collect form data
+    const formData = {
+      moduleId: currentModule,
+      moduleName: modules.find(m => m.id === currentModule).name,
+      studentName: document.getElementById("studentName").value,
+      mainTakeaway: document.getElementById("mainTakeaway").value,
+      emotionalResponse: document.getElementById("emotionalResponse").value,
+      confidence: document.getElementById("confidence").value,
+      additionalComments: document.getElementById("additionalComments").value,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Save to localStorage
+    const existingData = localStorage.getItem('reflectionSubmissions');
+    const submissions = existingData ? JSON.parse(existingData) : [];
+    submissions.push(formData);
+    localStorage.setItem('reflectionSubmissions', JSON.stringify(submissions));
+    
+    console.log("Reflection submitted:", formData);
+    
+    // Mark current module as completed and unlock next module
+    completeModule(currentModule);
+    
+    // Show success message
+    if (reflectionForm && successMessage) {
+      reflectionForm.style.display = "none";
+      successMessage.style.display = "block";
+    }
+  });
+}
 
 // Close reflection form
-closeReflectionBtn.addEventListener("click", closeReflection);
-closeSuccessBtn.addEventListener("click", closeReflection);
+if (closeReflectionBtn) {
+  closeReflectionBtn.addEventListener("click", closeReflection);
+}
+if (closeSuccessBtn) {
+  closeSuccessBtn.addEventListener("click", closeReflection);
+}
 
 // Click outside to close
-reflectionOverlay.addEventListener("click", (e) => {
-  if (e.target === reflectionOverlay) closeReflection();
-});
+if (reflectionOverlay) {
+  reflectionOverlay.addEventListener("click", (e) => {
+    if (e.target === reflectionOverlay) closeReflection();
+  });
+}
 
-video.addEventListener("ended", () => {
-  const module = modules.find(m => m.id === currentModule);
-  if (currentSrc === module.intro) {
-    // Smoothly show the choice overlay
-    choiceOverlay.classList.add("show");
-  } else {
-    choiceOverlay.classList.remove("show");
-    renderEndScreen();
-    endOverlay.classList.add("show");
+if (video) {
+  video.addEventListener("ended", () => {
+    const module = modules.find(m => m.id === currentModule);
+    if (currentSrc === module.intro) {
+      // Smoothly show the choice overlay
+      if (choiceOverlay) choiceOverlay.classList.add("show");
+    } else {
+      if (choiceOverlay) choiceOverlay.classList.remove("show");
+      renderEndScreen();
+      if (endOverlay) endOverlay.classList.add("show");
 
-    // freeze last frame behind overlay
-    try {
-      video.pause();
-      video.currentTime = Math.max(0, video.duration - 0.05);
-    } catch {}
-    // Reflection form no longer opens automatically
-  }
-});
+      // freeze last frame behind overlay
+      try {
+        video.pause();
+        video.currentTime = Math.max(0, video.duration - 0.05);
+      } catch {}
+      // Reflection form no longer opens automatically
+    }
+  });
+}
 
 async function smoothSwitchTo(src) {
+  if (!video || !choiceOverlay || !endOverlay) return;
+  
   choiceOverlay.classList.remove("show");
   endOverlay.classList.remove("show");
   closeReview();
@@ -337,9 +403,116 @@ async function smoothSwitchTo(src) {
   setTimeout(() => video.classList.remove("fade-in"), 400);
 }
 
-document.querySelectorAll(".btn[data-video]").forEach((btn) => {
-  btn.addEventListener("click", () => smoothSwitchTo(btn.dataset.video));
-});
+const choiceButtons = document.querySelectorAll(".btn[data-video]");
+if (choiceButtons.length > 0) {
+  choiceButtons.forEach((btn) => {
+    btn.addEventListener("click", () => smoothSwitchTo(btn.dataset.video));
+  });
+}
+
+// Replay button functionality
+const replayBtn = document.getElementById("replayBtn");
+if (replayBtn && video) {
+  replayBtn.addEventListener("click", () => {
+    const module = modules.find(m => m.id === currentModule);
+    if (module) {
+      smoothSwitchTo(module.intro);
+      if (choiceOverlay) choiceOverlay.classList.remove("show");
+    }
+  });
+}
 
 // Initialize modules on page load
-initModules();
+if (document.getElementById('moduleList')) {
+  initModules();
+}
+
+// Certificate Page Functionality
+function initCertificatePage() {
+  const certificateDateElement = document.getElementById('certificateDate');
+  const certificateForm = document.getElementById('certificateForm');
+  
+  // Only run if we're on the certificate page
+  if (!certificateForm || !certificateDateElement) {
+    return;
+  }
+
+  console.log('Certificate page initialized');
+
+  // Set current date
+  const today = new Date();
+  const dateString = today.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+  certificateDateElement.textContent = `Date: ${dateString}`;
+
+  // Handle form submission
+  certificateForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    console.log('Form submitted');
+    
+    const userName = document.getElementById('userName').value.trim();
+    console.log('User name:', userName);
+    
+    if (userName) {
+      // Update certificate with user's name
+      const recipientNameElement = document.getElementById('recipientName');
+      if (recipientNameElement) {
+        recipientNameElement.textContent = userName;
+      }
+      
+      // Save to localStorage
+      localStorage.setItem('certificateName', userName);
+      localStorage.setItem('certificateDate', dateString);
+      
+      // Hide form and show certificate
+      const nameInputSection = document.getElementById('nameInputSection');
+      const certDisplay = document.getElementById('certificateDisplay');
+      
+      console.log('Showing certificate');
+      if (nameInputSection) nameInputSection.style.display = 'none';
+      if (certDisplay) {
+        certDisplay.style.display = 'flex';
+        certDisplay.classList.add('show');
+      }
+    }
+  });
+
+  // Check if user already generated a certificate
+  const savedName = localStorage.getItem('certificateName');
+  const savedDate = localStorage.getItem('certificateDate');
+  
+  const recipientName = document.getElementById('recipientName');
+  if (savedName && recipientName) {
+    recipientName.textContent = savedName;
+    if (savedDate) {
+      certificateDateElement.textContent = `Date: ${savedDate}`;
+    }
+  }
+}
+
+// Reset form function (for certificate page)
+function resetForm() {
+  const certificateDisplay = document.getElementById('certificateDisplay');
+  const nameInputSection = document.getElementById('nameInputSection');
+  const userName = document.getElementById('userName');
+  
+  if (certificateDisplay && nameInputSection) {
+    certificateDisplay.style.display = 'none';
+    certificateDisplay.classList.remove('show');
+    nameInputSection.style.display = 'block';
+    if (userName) {
+      userName.value = '';
+      userName.focus();
+    }
+  }
+}
+
+// Initialize certificate page when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCertificatePage);
+} else {
+  initCertificatePage();
+}

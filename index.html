@@ -23,6 +23,11 @@
       <div class="module-list" id="moduleList">
         <!-- Modules will be dynamically inserted here -->
       </div>
+      <a href="certification.html" class="certificate-link-sidebar" id="certificateLink" title="Get Your Certificate">
+        <span class="cert-icon" id="certIcon">🏆</span> Get Certificate
+        <span class="cert-lock-icon" id="certLockIcon">🔒</span>
+        <span class="cert-tooltip" id="certTooltip">Complete all 6 modules to unlock</span>
+      </a>
       <a href="dashboard.html" class="dashboard-link-sidebar" title="View Dashboard">
         📊 View Dashboard
       </a>
@@ -33,23 +38,28 @@
     <div class="main-wrapper">
       <h1 class="main-title" id="moduleTitle">Module 1</h1>
       <div class="video-container">
-    <video id="mainVideo" autoplay muted playsinline>
+    <video id="mainVideo" muted playsinline>
       <source src="Videos/vid1.mp4" type="video/mp4">
-      <!-- Poster image to prevent black screen -->
+      Your browser does not support the video tag.
     </video>
+    <button class="play-button" id="playButton">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <circle cx="40" cy="40" r="38" stroke="white" stroke-width="3" fill="rgba(0,0,0,0.5)"/>
+        <path d="M32 25L55 40L32 55V25Z" fill="white"/>
+      </svg>
+    </button>
     <style>
       #mainVideo {
         background: #222;
       }
     </style>
-      Your browser does not support the video tag.
-    </video>
 
     <!-- Choice overlay -->
     <div class="overlay" id="choiceOverlay">
       <div class="choices">
         <button class="btn" data-video="Videos/vid2.mp4">Option A</button>
         <button class="btn" data-video="Videos/vid3.mp4">Option B</button>
+        <button class="btn btn-replay" id="replayBtn">🔄 Replay</button>
       </div>
     </div>
 

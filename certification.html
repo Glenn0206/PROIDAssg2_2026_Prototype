@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certificate of Completion</title>
+  <link rel="stylesheet" href="certification.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Name Input Section -->
+    <div class="name-input-section" id="nameInputSection">
+      <h1>🎉 Congratulations!</h1>
+      <p>You've completed all the modules. Enter your name to generate your certificate.</p>
+      
+      <form id="certificateForm">
+        <div class="form-group">
+          <label for="userName">Your Full Name</label>
+          <input 
+            type="text" 
+            id="userName" 
+            name="userName" 
+            required 
+            placeholder="Enter your full name"
+            autocomplete="name"
+          >
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn">Generate Certificate</button>
+          <a href="index.html" class="btn btn-secondary">Back to Modules</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Certificate Display -->
+    <div class="certificate-container" id="certificateDisplay" style="display:none;">
+      <div class="certificate-content">
+        <div class="certificate-left">
+          <div class="certificate-icon">🏆</div>
+          <h1 class="certificate-title">Certificate of Completion</h1>
+          <p class="certificate-subtitle">Learning Modules Program</p>
+        </div>
+        <div class="certificate-right">
+          <div class="certificate-body">
+            <p class="certificate-text">This certifies that</p>
+            <div class="recipient-name" id="recipientName">John Doe</div>
+            <p class="certificate-text">
+              has successfully completed all six learning modules with dedication and excellence.
+            </p>
+            <p class="completion-text">
+              <strong>Modules Completed:</strong>
+              Module 1: Introduction<br>
+              Module 2: Body Image<br>
+              Module 3: Self-Esteem<br>
+              Module 4: Confidence Building<br>
+              Module 5: Peer Pressure<br>
+              Module 6: Final Review
+            </p>
+          </div>
+          <div class="certificate-footer">
+            <div class="signature-block">
+              <div class="signature-line">Dove</div>
+              <p class="signature-title">Authorized Partner</p>
+            </div>
+            <div class="signature-block">
+              <div class="signature-line">MOE</div>
+              <p class="signature-title">Ministry of Education</p>
+            </div>
+          </div>
+          <p class="certificate-date" id="certificateDate">Date: March 4, 2026</p>
+          <div class="certificate-actions">
+            <button onclick="window.print()" class="btn">🖨️ Print Certificate</button>
+            <button onclick="resetForm()" class="btn btn-secondary">Generate New Certificate</button>
+            <a href="index.html" class="btn btn-secondary">Back to Modules</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
