@@ -8,11 +8,31 @@
 </head>
 
 <body>
-  <!-- <a href="dashboard.html" class="dashboard-link" title="View Dashboard">📊 Dashboard</a> -->
+  <!-- Sidebar Toggle Button (Outside Sidebar) -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <span class="toggle-icon">☰</span>
+  </button>
 
-  <div class="main-wrapper">
-    <h1 class="main-title">Module 1</h1>
-    <div class="video-container">
+  <!-- Module Sidebar -->
+  <aside class="module-sidebar" id="moduleSidebar">
+    <div class="sidebar-content">
+      <div class="sidebar-header">
+        <h2>Learning Modules</h2>
+        <div class="progress-indicator" id="progressIndicator">Completed 0/6</div>
+      </div>
+      <div class="module-list" id="moduleList">
+        <!-- Modules will be dynamically inserted here -->
+      </div>
+      <a href="dashboard.html" class="dashboard-link-sidebar" title="View Dashboard">
+        📊 View Dashboard
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="main-wrapper">
+      <h1 class="main-title" id="moduleTitle">Module 1</h1>
+      <div class="video-container">
     <video id="mainVideo" autoplay muted playsinline>
       <source src="Videos/vid1.mp4" type="video/mp4">
       <!-- Poster image to prevent black screen -->
@@ -103,10 +123,9 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
-    </div>
-  </div>
 </body>
 </html>

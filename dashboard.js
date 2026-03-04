@@ -76,6 +76,7 @@ function displaySubmissions(submissions) {
           <div>
             <div class="submission-name">${escapeHtml(submission.studentName)}</div>
             <div class="submission-date">${formattedDate}</div>
+            ${submission.moduleName ? `<div class="module-badge">${submission.moduleName}</div>` : ''}
           </div>
           <button class="delete-btn" onclick="deleteSubmission(${index})" title="Delete">×</button>
         </div>
