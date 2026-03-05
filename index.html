@@ -9,6 +9,42 @@
 </head>
 
 <body>
+  <!-- Education Level Selection Screen -->
+  <div class="education-selection-overlay" id="educationSelectionOverlay">
+    <div class="education-selection-container">
+      <h1 class="education-selection-title">Welcome to Interactive Learning</h1>
+      <p class="education-selection-subtitle">Select your education level to begin</p>
+      <div class="education-options">
+        <button class="education-option" data-level="secondary">
+          <div class="education-icon">🎓</div>
+          <div class="education-name">Secondary</div>
+          <div class="education-description">Secondary School Students</div>
+        </button>
+        <button class="education-option" data-level="ite">
+          <div class="education-icon">🔧</div>
+          <div class="education-name">ITE</div>
+          <div class="education-description">Institute of Technical Education</div>
+        </button>
+        <button class="education-option" data-level="polytechnic">
+          <div class="education-icon">📚</div>
+          <div class="education-name">Polytechnic</div>
+          <div class="education-description">Polytechnic Students</div>
+        </button>
+        <button class="education-option" data-level="university">
+          <div class="education-icon">🎯</div>
+          <div class="education-name">University</div>
+          <div class="education-description">University Students</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Return to Selection Button -->
+  <button class="return-to-selection" id="returnToSelectionBtn" title="Change Education Level">
+    <span class="return-icon">↩</span>
+    <span class="return-text">Change Level</span>
+  </button>
+
   <!-- Sidebar Toggle Button (Outside Sidebar) -->
   <button class="sidebar-toggle" id="sidebarToggle">
     <span class="toggle-icon">☰</span>

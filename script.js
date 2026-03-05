@@ -1,3 +1,65 @@
+// Education Level Selection
+let selectedEducationLevel = localStorage.getItem('educationLevel') || null;
+
+// Initialize Education Selection Screen
+function initEducationSelection() {
+  const overlay = document.getElementById('educationSelectionOverlay');
+  const options = document.querySelectorAll('.education-option');
+  
+  // If education level already selected, hide the overlay
+  if (selectedEducationLevel) {
+    overlay.classList.add('hidden');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 300);
+  }
+  
+  // Add click handlers to education options
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      const level = option.dataset.level;
+      selectedEducationLevel = level;
+      localStorage.setItem('educationLevel', level);
+      
+      // Hide the overlay with animation
+      overlay.classList.add('hidden');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 300);
+      
+      // Initialize the modules after selection
+      initModulesAfterSelection();
+    });
+  });
+}
+
+// Initialize modules after education level selection
+function initModulesAfterSelection() {
+  // You can customize module content based on education level here
+  console.log('Education level selected:', selectedEducationLevel);
+  // Continue with normal module initialization
+}
+
+// Return to selection button functionality
+function initReturnToSelectionButton() {
+  const returnBtn = document.getElementById('returnToSelectionBtn');
+  const overlay = document.getElementById('educationSelectionOverlay');
+  
+  if (returnBtn && overlay) {
+    returnBtn.addEventListener('click', () => {
+      // Clear the selected education level
+      localStorage.removeItem('educationLevel');
+      selectedEducationLevel = null;
+      
+      // Show the overlay again
+      overlay.style.display = 'flex';
+      setTimeout(() => {
+        overlay.classList.remove('hidden');
+      }, 10);
+    });
+  }
+}
+
 // Module System with branching structure
 const modules = [
   { id: 1, name: "Module 1: Introduction", intro: "vid1", optionA: "vid2", optionB: "vid5" },
@@ -471,6 +533,12 @@ if (goBackBtn) {
 
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize education level selection first
+  initEducationSelection();
+  
+  // Initialize return to selection button
+  initReturnToSelectionButton();
+  
   const module = modules.find(m => m.id === currentModule);
   if (module) {
     updateChoiceButtons(module.optionA, module.optionB);

@@ -1,3 +1,167 @@
+/* Education Level Selection Screen */
+.education-selection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.education-selection-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.education-selection-container {
+  text-align: center;
+  padding: 40px;
+  max-width: 900px;
+  width: 90%;
+}
+
+.education-selection-title {
+  color: #1e293b;
+  font-size: 42px;
+  margin: 0 0 16px;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+.education-selection-subtitle {
+  color: #64748b;
+  font-size: 20px;
+  margin: 0 0 48px;
+  font-weight: 400;
+}
+
+.education-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.education-option {
+  background: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 32px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.education-option:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  background: #f8f9fa;
+}
+
+.education-option:active {
+  transform: translateY(-4px);
+}
+
+.education-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.education-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e73be;
+  margin-bottom: 8px;
+}
+
+.education-description {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .education-selection-title {
+    font-size: 32px;
+  }
+  
+  .education-selection-subtitle {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .education-options {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .education-option {
+    padding: 24px 20px;
+  }
+}
+
+/* Return to Selection Button */
+.return-to-selection {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e73be;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.return-to-selection:hover {
+  background: #155a8a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.return-to-selection:active {
+  transform: translateY(0);
+}
+
+.return-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.return-text {
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .return-to-selection {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .return-text {
+    display: none;
+  }
+  
+  .return-icon {
+    font-size: 20px;
+  }
+}
+
 /* Module Sidebar (Assessment Style) */
 .module-sidebar {
   position: fixed;
