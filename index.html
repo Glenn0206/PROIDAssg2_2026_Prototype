@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interactive Story</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 
 <body>
@@ -38,45 +39,37 @@
     <div class="main-wrapper">
       <h1 class="main-title" id="moduleTitle">Module 1</h1>
       <div class="video-container">
-    <video id="mainVideo" muted playsinline>
-      <source src="Videos/vid1.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <button class="play-button" id="playButton">
-      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-        <circle cx="40" cy="40" r="38" stroke="white" stroke-width="3" fill="rgba(0,0,0,0.5)"/>
-        <path d="M32 25L55 40L32 55V25Z" fill="white"/>
-      </svg>
-    </button>
+    <div id="mainVideo"></div>
     <style>
       #mainVideo {
+        width: 100%;
+        height: 100%;
         background: #222;
+      }
+      .video-container {
+        position: relative;
       }
     </style>
 
     <!-- Choice overlay -->
     <div class="overlay" id="choiceOverlay">
-      <div class="choices">
-        <button class="btn" data-video="Videos/vid2.mp4">Option A</button>
-        <button class="btn" data-video="Videos/vid3.mp4">Option B</button>
-        <button class="btn btn-replay" id="replayBtn">🔄 Replay</button>
+      <div class="choice-content">
+        <h2 class="choice-title" id="choiceTitle">What would you do?</h2>
+        <p class="choice-description" id="choiceDescription">Think carefully about your decision. Each choice leads to different outcomes.</p>
+        <div class="choices">
+          <button class="btn" data-video="vid2">Option A: See the Consequence</button>
+          <button class="btn" data-video="vid5">Option B: Natural Beauty</button>
+          <div class="choice-controls">
+            <button class="btn btn-back" id="goBackBtn" style="display: none;">← Go Back</button>
+            <button class="btn btn-replay" id="replayBtn">🔄 Replay</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- End screen overlay -->
     <div class="overlay" id="endOverlay">
       <div class="end-card" id="endCard"></div>
-
-      <!-- Review modal -->
-      <div class="modal" id="reviewModal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true">
-          <h4>Review</h4>
-          <p id="reviewText"></p>
-          <div class="modal-actions">
-            <button class="btn-close" id="closeReviewBtn">Close</button>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Reflection Form Overlay -->
