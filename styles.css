@@ -718,18 +718,79 @@ html, body{
 
 /* End screen card */
 .end-card{
-  background: #888888;
-  color: #374151;
-  padding: 25px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1f2937;
+  padding: 40px;
   border-radius: 20px;
   text-align: center;
   width: min(800px, 90%);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .end-card h2{
-  margin: 0 0 18px;
+  margin: 0 0 24px;
   font-size: 42px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.end-card h3 {
+  color: #5a67d8;
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Button styles for end screen */
+.btn-primary {
+  background: #ffffff;
+  color: #1f2937;
+  font-weight: 600;
+  border: 2px solid #e5e7eb;
+  padding: 16px 32px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+.btn-reflection {
+  background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+  color: white;
+  font-weight: 600;
+  padding: 16px 32px;
+  font-size: 16px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-reflection:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  transform: scale(1.05);
+}
+
+.btn-dashboard {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  font-weight: 600;
+  padding: 16px 32px;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-dashboard:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: scale(1.05);
 }
 
 /* Modal on top of end overlay */
@@ -1015,6 +1076,31 @@ html, body{
   }
   
   .choice-description {
+    font-size: 14px;
+  }
+  
+  .end-card {
+    padding: 24px;
+    max-width: 95%;
+  }
+  
+  .end-card h2 {
+    font-size: 32px;
+  }
+  
+  .end-card h3 {
+    font-size: 20px;
+  }
+  
+  .btn {
+    font-size: 14px;
+    padding: 14px 28px;
+  }
+  
+  .btn-primary,
+  .btn-reflection,
+  .btn-dashboard {
+    padding: 14px 24px;
     font-size: 14px;
   }
 }

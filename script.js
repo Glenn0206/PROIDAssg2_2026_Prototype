@@ -96,15 +96,19 @@ const videoTree = {
 const scenarios = {
   "vid1": {
     title: "What would you do?",
-    description: "Think carefully about your decision. Each choice leads to different outcomes.",
-    optionAText: "Option A: See the Consequence",
-    optionBText: "Option B: Natural Beauty"
+    description: "Miya scrolls through TikTok and sees her feed full of filtered videos. She compares it to herself and gets self conscious about her pores. She decides to post a video of herself using a beauty filter. Should Miya post the video? ",
+    optionAText: "Option A: Post Filtered Video",
+    optionBText: "Option B: Post Natural Beauty",
+    optionAOutcome: "Miya posted a filtered video and got many likes, but people started judging her appearance in real life.",
+    optionBOutcome: "Miya posted her natural beauty and received genuine support from her friends and followers."
   },
   "vid2": {
     title: "The situation continues...",
-    description: "Your previous choice has led you here. How will you respond next?",
+    description: "After posting the edited photo, Miya received many likes and comments on TikTok. However, people who knows her starts judging her in real life. How should Miya respond?",
     optionAText: "Option A: Ignore and Continue Posting Filtered Video",
-    optionBText: "Option B: Delete the video and Post a Natural One"
+    optionBText: "Option B: Delete video and reject filters",
+    optionAOutcome: "Miya continued with filters but felt increasingly disconnected from her true self and authentic relationships.",
+    optionBOutcome: "Miya deleted the filtered content and embraced her natural appearance, gaining more authentic confidence."
   }
 };
 
@@ -135,7 +139,7 @@ function initPlayer(vidId) {
         modestbranding: 1,
         rel: 0,
         iv_load_policy: 3,
-        fs: 1
+        fs: 0
       },
       events: {
         'onStateChange': onPlayerStateChange,
@@ -373,25 +377,66 @@ function handleVideoEnd() {
   }
 }
 
-
+function generatePathSummary() {
+  const fullPath = [...videoHistory, currentSrc];
+  let summaryHTML = '<div style="margin: 20px 0; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">';
+  summaryHTML += '<h3 style="color: #5a67d8; margin-bottom: 15px;">Your Journey Summary</h3>';
+  
+  fullPath.forEach((videoId, index) => {
+    const scenario = scenarios[videoId];
+    if (scenario && index < fullPath.length - 1) {
+      const nextVideo = fullPath[index + 1];
+      const choices = videoTree[videoId];
+      let outcome = '';
+      
+      if (choices) {
+        if (choices.optionA === nextVideo) {
+          outcome = scenario.optionAOutcome || scenario.optionAText || 'Option A';
+        } else if (choices.optionB === nextVideo) {
+          outcome = scenario.optionBOutcome || scenario.optionBText || 'Option B';
+        }
+      }
+      
+      summaryHTML += `
+        <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #5a67d8;">
+          <div style="font-weight: 600; margin-bottom: 5px; color: #1f2937;">${scenario.title}</div>
+          <div style="font-size: 0.9em; margin-bottom: 8px; color: #6b7280;">${scenario.description}</div>
+          <div style="color: #dc2626; font-weight: 500;">📌 Outcome: ${outcome}</div>
+        </div>
+      `;
+    }
+  });
+  
+  summaryHTML += '</div>';
+  return summaryHTML;
+}
 
 function renderEndScreen() {
   if (!endCard) return;
+  const summary = generatePathSummary();
+  
   endCard.innerHTML = `
     <h2>THE END</h2>
-    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+    ${summary}
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+      <button id="rewatchModuleBtn" class="btn btn-primary">Rewatch Module</button>
       <button id="showReflectionBtn" class="btn btn-reflection">Share Your Reflection</button>
-      <a href="dashboard.html" class="btn btn-dashboard">View Dashboard</a>
     </div>
   `;
+
+  const rewatchModuleBtn = document.getElementById("rewatchModuleBtn");
+  if (rewatchModuleBtn) {
+    rewatchModuleBtn.addEventListener("click", () => {
+      if (endOverlay) endOverlay.classList.remove('show');
+      switchToModule(currentModule);
+    });
+  }
 
   const showReflectionBtn = document.getElementById("showReflectionBtn");
   if (showReflectionBtn) {
     showReflectionBtn.addEventListener("click", openReflection);
   }
 }
-
-
 
 function openReflection() {
   if (!reflectionOverlay || !reflectionForm || !successMessage) return;
@@ -450,12 +495,6 @@ if (reflectionForm) {
 
 if (closeReflectionBtn) closeReflectionBtn.addEventListener("click", closeReflection);
 if (closeSuccessBtn) closeSuccessBtn.addEventListener("click", closeReflection);
-
-if (reflectionOverlay) {
-  reflectionOverlay.addEventListener("click", (e) => {
-    if (e.target === reflectionOverlay) closeReflection();
-  });
-}
 
 function updateChoiceButtons(optionA, optionB) {
   const choiceButtons = document.querySelectorAll(".btn[data-video]");
