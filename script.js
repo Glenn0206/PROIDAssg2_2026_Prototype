@@ -103,11 +103,11 @@ function updateModuleNames() {
 
 // Video mapping to YouTube video IDs
 const videoUrls = {
-  "vid1": "gVpbfk82Tzs",
-  "vid2": "y-R1tQTxxwY",
-  "vid3": "JKmgAYn1G38",
-  "vid4": "sXdFA91WRYk",
-  "vid5": "ppIBAn4gp_E"
+  "vid1": "-IuKq4irTbY",
+  "vid2": "ssMG2Tv-Ndc",
+  "vid3": "ZkMwgVVDTgY",
+  "vid4": "e_nkNpzNJsM",
+  "vid5": "MpK860L1mEI"
 };
 
 // YouTube Player instance
