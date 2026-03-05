@@ -123,6 +123,9 @@ const videoTree = {
   "vid5": null
 };
 
+// Positive outcomes (vid4 and vid5 are positive)
+const positiveOutcomes = ["vid4", "vid5"];
+
 // Scenario descriptions for each decision point
 const scenarios = {
   "vid1": {
@@ -428,11 +431,16 @@ function generatePathSummary() {
         }
       }
       
+      // Check if outcome is positive or negative
+      const isPositive = positiveOutcomes.includes(nextVideo);
+      const borderColor = isPositive ? '#10b981' : '#ef4444';
+      const outcomeColor = isPositive ? '#059669' : '#dc2626';
+      
       summaryHTML += `
-        <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #5a67d8;">
+        <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid ${borderColor};">
           <div style="font-weight: 600; margin-bottom: 5px; color: #1f2937;">${scenario.title}</div>
           <div style="font-size: 0.9em; margin-bottom: 8px; color: #6b7280;">${scenario.description}</div>
-          <div style="color: #dc2626; font-weight: 500;">📌 Outcome: ${outcome}</div>
+          <div style="color: ${outcomeColor}; font-weight: 500;">📌 ${outcome}</div>
         </div>
       `;
     }
