@@ -35,9 +35,12 @@ function initEducationSelection() {
 
 // Initialize modules after education level selection
 function initModulesAfterSelection() {
-  // You can customize module content based on education level here
+  // Reinitialize modules with new names
+  updateModuleNames();
+  if (document.getElementById('moduleList')) {
+    initModules();
+  }
   console.log('Education level selected:', selectedEducationLevel);
-  // Continue with normal module initialization
 }
 
 // Return to selection button functionality
@@ -60,15 +63,43 @@ function initReturnToSelectionButton() {
   }
 }
 
+// Module names based on education level
+const moduleNamesByLevel = {
+  'secondary': [
+    "Module 1: Understanding My Body",
+    "Module 2: Words Shape Culture",
+    "Module 3: When Comments Hurt - What Do I Do?"
+  ],
+  'post-secondary': [
+    "Module 1: Skin, Stress & Self-Perception",
+    "Module 2: Comparison Trap",
+    "Module 3: BodyTalk & Social Norms"
+  ],
+  'university': [
+    "Module 1: Appearance & Identity",
+    "Module 2: Expanding Identity",
+    "Module 3: Be the Change"
+  ]
+};
+
 // Module System with branching structure
-const modules = [
-  { id: 1, name: "Module 1: Introduction", intro: "vid1", optionA: "vid2", optionB: "vid5" },
-  { id: 2, name: "Module 2: Body Image", intro: "vid1", optionA: "vid2", optionB: "vid5" },
-  { id: 3, name: "Module 3: Self-Esteem", intro: "vid1", optionA: "vid2", optionB: "vid5" },
-  { id: 4, name: "Module 4: Confidence Building", intro: "vid1", optionA: "vid2", optionB: "vid5" },
-  { id: 5, name: "Module 5: Peer Pressure", intro: "vid1", optionA: "vid2", optionB: "vid5" },
-  { id: 6, name: "Module 6: Final Review", intro: "vid1", optionA: "vid2", optionB: "vid5" }
+let modules = [
+  { id: 1, name: "Module 1: Understanding My Body", intro: "vid1", optionA: "vid2", optionB: "vid5" },
+  { id: 2, name: "Module 2: Words Shape Culture", intro: "vid1", optionA: "vid2", optionB: "vid5" },
+  { id: 3, name: "Module 3: When Comments Hurt - What Do I Do?", intro: "vid1", optionA: "vid2", optionB: "vid5" }
 ];
+
+// Update module names based on selected education level
+function updateModuleNames() {
+  const level = selectedEducationLevel || 'secondary';
+  const names = moduleNamesByLevel[level] || moduleNamesByLevel['secondary'];
+  
+  modules.forEach((module, index) => {
+    if (names[index]) {
+      module.name = names[index];
+    }
+  });
+}
 
 // Video mapping to YouTube video IDs
 const videoUrls = {
@@ -182,20 +213,20 @@ function initModules() {
   
   if (!moduleList || !progressIndicator) return;
   
-  progressIndicator.textContent = `Completed ${completedModules.length}/6`;
+  progressIndicator.textContent = `Completed ${completedModules.length}/3`;
   
   // Update certificate button state
   const certificateLink = document.getElementById('certificateLink');
   const certTooltip = document.getElementById('certTooltip');
   if (certificateLink) {
-    if (completedModules.length === 6) {
+    if (completedModules.length === 3) {
       certificateLink.classList.remove('disabled');
       certificateLink.title = 'Get Your Certificate';
     } else {
       certificateLink.classList.add('disabled');
       certificateLink.title = '';
       if (certTooltip) {
-        certTooltip.textContent = `Complete all 6 modules to unlock (${completedModules.length}/6)`;
+        certTooltip.textContent = `Complete all 3 modules to unlock (${completedModules.length}/3)`;
       }
     }
   }
@@ -577,6 +608,9 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Initialize return to selection button
   initReturnToSelectionButton();
+  
+  // Update module names based on selected education level
+  updateModuleNames();
   
   const module = modules.find(m => m.id === currentModule);
   if (module) {
